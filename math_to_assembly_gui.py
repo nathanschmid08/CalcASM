@@ -25,7 +25,7 @@ class CalculatorApp:
         main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
         # Oberer Bereich: Rechner
-        calculator_frame = tk.LabelFrame(main_frame, text="Taschenrechner", bg="#f0f0f0", font=("Arial", 12))
+        calculator_frame = tk.LabelFrame(main_frame, text="Taschenrechner", bg="#f0f0f0", font=("Arial", 12), fg="black")
         calculator_frame.pack(fill=tk.BOTH, padx=5, pady=5, ipady=5)
         
         # Anzeige für den mathematischen Ausdruck
@@ -43,13 +43,17 @@ class CalculatorApp:
             ('7', 0, 0), ('8', 0, 1), ('9', 0, 2), ('/', 0, 3), ('C', 0, 4),
             ('4', 1, 0), ('5', 1, 1), ('6', 1, 2), ('*', 1, 3), ('(', 1, 4),
             ('1', 2, 0), ('2', 2, 1), ('3', 2, 2), ('-', 2, 3), (')', 2, 4),
-            ('0', 3, 0), ('.', 3, 1), ('^', 3, 2), ('+', 3, 3), ('=', 3, 4)
+            ('0', 3, 0), ('.', 3, 1), ('^', 3, 2), ('+', 3, 3), ('Konvertieren', 3, 4)
         ]
         
         # Erstelle Tasten
         for (text, row, col) in buttons:
-            button = tk.Button(buttons_frame, text=text, font=("Arial", 14), width=5, height=2,
-                            command=lambda t=text: self.button_click(t))
+            if text == "Konvertieren":
+                button = tk.Button(buttons_frame, text=text, font=("Arial", 10), width=5, height=2,
+                               bg="#4CAF50", fg="black", command=self.convert_expression)
+            else:
+                button = tk.Button(buttons_frame, text=text, font=("Arial", 14), width=5, height=2,
+                               command=lambda t=text: self.button_click(t))
             button.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
         
         # Konfiguriere gleichmässige Grösse für Tasten
@@ -63,19 +67,15 @@ class CalculatorApp:
         convert_frame.pack(fill=tk.X, padx=10, pady=5)
         
         self.output_file_var = tk.StringVar(value="output.asm")
-        tk.Label(convert_frame, text="Ausgabedatei:", bg="#f0f0f0", font=("Arial", 10)).pack(side=tk.LEFT, padx=5)
+        tk.Label(convert_frame, text="Ausgabedatei:", bg="#f0f0f0", font=("Arial", 10), fg="black").pack(side=tk.LEFT, padx=5)
         tk.Entry(convert_frame, textvariable=self.output_file_var, width=20).pack(side=tk.LEFT, padx=5)
         
-        convert_button = tk.Button(convert_frame, text="Konvertieren", font=("Arial", 10), bg="#4CAF50", fg="white",
-                                command=self.convert_expression)
-        convert_button.pack(side=tk.RIGHT, padx=5)
-        
         # Unterer Bereich: Assembly-Code-Anzeige
-        asm_frame = tk.LabelFrame(main_frame, text="Generierter Assembly-Code", bg="#f0f0f0", font=("Arial", 12))
+        asm_frame = tk.LabelFrame(main_frame, text="Generierter Assembly-Code", bg="#f0f0f0", font=("Arial", 12), fg="black")
         asm_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
         # Textfeld für Assembly-Code
-        self.asm_display = scrolledtext.ScrolledText(asm_frame, font=("Courier", 12), wrap=tk.WORD)
+        self.asm_display = scrolledtext.ScrolledText(asm_frame, font=("Courier", 12), wrap=tk.WORD, fg="#b070ff")
         self.asm_display.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
         # Statusleiste
@@ -90,9 +90,6 @@ class CalculatorApp:
         if text == 'C':
             # Clear display
             self.display_var.set("")
-        elif text == '=':
-            # Calculate and convert
-            self.convert_expression()
         else:
             # Append character to display
             current = self.display_var.get()
