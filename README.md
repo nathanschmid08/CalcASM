@@ -134,7 +134,7 @@
 ### Sample Assembly Output:
 
 ```nasm
-; Generated from: 2^4 + 3
+; Generated NASM Assembly Code for Windows x64
 global main
 extern ExitProcess
 extern printf
