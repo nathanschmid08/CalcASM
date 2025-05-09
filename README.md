@@ -201,6 +201,6 @@ power_end_0:
 <hr>
 
 <div align="center">
-  <h3>💻 Made for Assembly Enthusiasts, by an Assembly Enthusiast 💻</h3>
+  <h3>Made for Assembly Enthusiasts, by an Assembly Enthusiast</h3>
   <p><em>"Understanding assembly is understanding the machine."</em></p>
 </div>
